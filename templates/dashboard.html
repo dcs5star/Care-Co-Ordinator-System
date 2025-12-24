@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Care Coordinator Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <i class="bi bi-heart-pulse-fill me-2"></i>
+                Care Coordinator Dashboard
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" id="alertsTab">Alerts Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="residentTab">Resident Details</a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <span class="navbar-text me-3">
+                        <i class="bi bi-person-circle me-1"></i> {{ admin_name }}
+                    </span>
+                    <a href="/logout" class="btn btn-outline-light btn-sm">
+                        <i class="bi bi-box-arrow-right"></i> Logout
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid mt-3">
+        <!-- Alerts Dashboard View -->
+        <div id="alertsDashboard">
+            <div class="d-flex" style="height: calc(100vh - 56px);">
+                <!-- Sidebar Toggle Button -->
+                <button class="btn btn-primary btn-sm position-fixed" id="sidebarToggle" style="z-index: 1000; left: 10px; top: 70px;">
+                    <i class="bi bi-list"></i>
+                </button>
+                
+                <!-- Chatbot Toggle Button -->
+                <button class="btn btn-primary btn-sm position-fixed chatbot-toggle-btn" id="chatbotToggleBtn" title="Toggle Chatbot">
+                    <i class="bi bi-chat-dots"></i>
+                </button>
+
+                <!-- Sidebar -->
+                <div class="sidebar" id="sidebar">
+                    <div class="accordion" id="filtersAccordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="facilityFilterHeading">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#facilityFilterCollapse" aria-expanded="true">
+                                    <i class="bi bi-building me-2"></i> Facility Filter
+                                </button>
+                            </h2>
+                            <div id="facilityFilterCollapse" class="accordion-collapse collapse show">
+                                <div class="accordion-body p-0">
+                                    <div class="card">
+                                        <div class="card-body" id="facilityFilters">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="allFacilities" checked>
+                                                <label class="form-check-label" for="allFacilities">
+                                                    <strong>All Facilities</strong>
+                                                </label>
+                                            </div>
+                                            <hr>
+                                            <!-- Facilities will be loaded here -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Content -->
+                <div class="main-content" id="mainContent">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                                <h5 class="card-title mb-0">CTA Dashboard</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Resident</th>
+                                                <th>Facility</th>
+                                                <th>Alert Type</th>
+                                                <th>Date/Time</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="alertsTableBody">
+                                            <!-- Alerts will be loaded here -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <nav>
+                                        <ul class="pagination pagination-sm mb-0" id="pagination">
+                                            <!-- Pagination will be loaded here -->
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Archive Widget -->
+                        <div class="row mt-3">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                                        <h5 class="card-title mb-0">Archived Alerts</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Resident</th>
+                                                        <th>Facility</th>
+                                                        <th>Alert Type</th>
+                                                        <th>Date/Time</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="archivedAlertsTableBody">
+                                                    <!-- Archived alerts will be loaded here -->
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        
+                                        <div class="d-flex justify-content-between align-items-center mt-3">
+                                            <nav>
+                                                <ul class="pagination pagination-sm mb-0" id="archivedPagination">
+                                                    <!-- Pagination will be loaded here -->
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row mt-3">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header bg-light">
+                                        <h5 class="card-title mb-0">Recent Activity</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <ul class="list-group list-group-flush" id="recentActivityList">
+                                            <!-- Activities will be loaded here -->
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Chatbot Panel -->
+                <div class="chatbot-panel" id="chatbotPanel">
+                    <div class="chatbot-header">
+                        <h5 class="mb-0"><i class="bi bi-chat-dots me-2"></i>Coordinator ChatBot</h5>
+                    </div>
+                    <div class="chatbot-body">
+                        <div class="chatbot-upload-section mb-3">
+                            <div class="row g-2">
+                                <div class="col-md-6">
+                                    <select class="form-select form-select-sm" id="uploadCategory">
+                                        <option value="internal-kb">Internal KB</option>
+                                        <option value="patient">Patient</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6" id="patientSelectContainer" style="display: none;">
+                                    <select class="form-select form-select-sm" id="patientSelect">
+                                        <option value="">Select Patient...</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mt-2">
+                                <input type="file" class="form-control form-control-sm" id="fileUpload" multiple>
+                                <button class="btn btn-primary btn-sm mt-2 w-100" id="uploadBtn">
+                                    <i class="bi bi-upload me-1"></i>Upload Documents
+                                </button>
+                            </div>
+                        </div>
+                        <div class="chatbot-messages" id="chatMessages">
+                            <div class="text-center text-muted py-4">
+                                <i class="bi bi-chat-text" style="font-size: 2rem;"></i>
+                                <p class="mt-2">Ask me anything about patients or internal knowledge!</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chatbot-input">
+                        <textarea class="form-control" id="chatInput" rows="2" placeholder="Type your question..."></textarea>
+                        <button class="btn btn-primary mt-2 w-100" id="sendBtn">
+                            <i class="bi bi-send me-1"></i>Send
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resident Detail View (initially hidden) -->
+        <div id="residentDetail" style="display: none;">
+            <!-- Content will be loaded via JavaScript -->
+        </div>
+    </div>
+
+    <!-- Message Care Team Modal -->
+    <div class="modal fade communication-modal" id="messageCareTeamModal" tabindex="-1">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Care Team Communication</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="communication-panel">
+                        <div class="mb-3">
+                            <label class="form-label">Recipients:</label>
+                            <input type="text" class="form-control" id="emailRecipients" placeholder="Enter email addresses separated by commas">
+                        </div>
+                        <div class="mb-3 message-group">
+                            <label class="form-label">Message:</label>
+                            <textarea class="form-control" id="emailMessage" rows="15"></textarea>
+                        </div>
+                        <div class="actions-row d-flex justify-content-between">
+                            <button class="btn btn-outline-secondary" id="attachBtn">
+                                <i class="bi bi-paperclip"></i> Attach
+                            </button>
+                            <button class="btn btn-primary" id="sendEmailBtn">
+                                <i class="bi bi-send-fill"></i> Send Securely
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+</html>

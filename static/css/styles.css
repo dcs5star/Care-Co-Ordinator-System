@@ -1,0 +1,728 @@
+/* Main Styles */
+body {
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.navbar-brand {
+    font-weight: 600;
+}
+
+/* Card Styles */
+.card {
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    margin-bottom: 15px;
+}
+
+.card-header {
+    border-radius: 8px 8px 0 0 !important;
+    font-weight: 500;
+}
+
+/* Alert Dashboard Styles */
+.alert-stat {
+    text-align: center;
+    padding: 10px;
+    border-radius: 6px;
+    background-color: #f8f9fa;
+}
+
+.alert-stat h3, .alert-stat h4 {
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.alert-stat p {
+    margin-bottom: 0;
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+.alert-stat-danger {
+    background-color: #f8d7da;
+}
+
+.alert-stat-danger h4 {
+    color: #842029;
+}
+
+.alert-stat-warning {
+    background-color: #fff3cd;
+}
+
+.alert-stat-warning h4 {
+    color: #664d03;
+}
+
+.alert-stat-success {
+    background-color: #d1e7dd;
+}
+
+.alert-stat-success h4 {
+    color: #0f5132;
+}
+
+/* Resident Detail Styles */
+.resident-header {
+    background-color: #e9ecef;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.resident-header h2 {
+    margin-bottom: 10px;
+}
+
+.resident-info {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.resident-info-item {
+    margin-right: 20px;
+    margin-bottom: 10px;
+}
+
+.resident-info-item strong {
+    display: block;
+    font-size: 0.85rem;
+    color: #6c757d;
+}
+
+.resident-info-item span {
+    font-size: 1rem;
+}
+
+.clinical-data-nav .nav-link.active {
+    background-color: #0d6efd;
+    color: white;
+}
+
+.clinical-data-tab {
+    padding: 15px;
+}
+
+.vital-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.vital-item:last-child {
+    border-bottom: none;
+}
+
+.vital-name {
+    font-weight: 500;
+}
+
+.vital-value {
+    font-weight: 600;
+}
+
+.vital-value.abnormal {
+    color: #dc3545;
+}
+
+.vital-trend {
+    color: #6c757d;
+    font-size: 0.85rem;
+}
+
+.ai-recommendation {
+    background-color: #e7f5ff;
+    border-left: 4px solid #0d6efd;
+    padding: 15px;
+    border-radius: 4px;
+}
+
+.ai-recommendation-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.ai-recommendation-title {
+    font-weight: 600;
+    color: #0d6efd;
+}
+
+.recommendation-text {
+    line-height: 1.6;
+}
+
+/* Communication Panel */
+.communication-panel {
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 15px;
+}
+
+.recipient-list {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+
+.recipient-tag {
+    background-color: #e9ecef;
+    border-radius: 16px;
+    padding: 4px 10px;
+    margin-right: 8px;
+    margin-bottom: 8px;
+    font-size: 0.85rem;
+    display: inline-flex;
+    align-items: center;
+}
+
+.recipient-tag .bi-x {
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+/* Chart Styles */
+.chart-container {
+    height: 250px;
+    margin-bottom: 20px;
+}
+
+/* Modal Styles */
+.modal-xl {
+    max-width: 90%;
+    width: 90%;
+}
+
+.modal-content {
+    min-height: auto;
+}
+
+.modal-body {
+    max-height: none;
+    overflow-y: auto;
+    padding: 1rem;
+}
+
+.modal-dialog {
+    margin: 1.75rem auto;
+    display: flex;
+    align-items: flex-start;
+}
+
+.modal-header {
+    padding: 0.75rem 1rem;
+}
+
+.communication-panel {
+    border: none;
+    padding: 0;
+}
+
+.form-label {
+    margin-bottom: 0.25rem;
+}
+
+.mb-3 {
+    margin-bottom: 0.75rem !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .resident-info-item {
+        flex-basis: 100%;
+    }
+}
+
+/* Table hover effect */
+.table-hover tbody tr:hover {
+    background-color: rgba(13, 110, 253, 0.05);
+    cursor: pointer;
+}
+
+/* Links */
+.resident-link {
+    color: #0d6efd;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.resident-link:hover {
+    text-decoration: underline;
+}
+
+/* Badge styles */
+.badge {
+    font-weight: 500;
+    padding: 5px 8px;
+}
+
+/* Alert Type Icons */
+.bi-arrow-up-circle { color: #e74c3c; }
+.bi-heart-pulse { color: #e74c3c; }
+.bi-droplet { color: #f39c12; }
+.bi-lungs { color: #3498db; }
+.bi-cup { color: #9b59b6; }
+.bi-droplet-half { color: #2ecc71; }
+
+/* Alert Rows */
+tr.alert-danger {
+    background-color: #fde8e8 !important;
+    border-left: 4px solid #e74c3c;
+}
+
+tr.alert-warning {
+    background-color: #fff3e0 !important;
+    border-left: 4px solid #f39c12;
+}
+
+/* Alert Stats */
+.alert-stat {
+    text-align: center;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #f8f9fa;
+    height: 100%;
+}
+
+.alert-stat h3, .alert-stat h4 {
+    margin: 0;
+    font-weight: bold;
+}
+
+.alert-stat p {
+    margin: 5px 0 0;
+    font-size: 0.9em;
+    color: #6c757d;
+}
+
+.alert-stat-danger { border-top: 3px solid #e74c3c; }
+.alert-stat-warning { border-top: 3px solid #f39c12; }
+.alert-stat-success { border-top: 3px solid #2ecc71; }
+
+/* Responsive Table */
+.table-responsive {
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+/* Resident Link Styling */
+.resident-link {
+    font-weight: 500;
+    color: #2c3e50;
+    text-decoration: none;
+}
+
+.resident-link:hover {
+    color: #1a73e8;
+    text-decoration: underline;
+}
+
+/* Filter Section */
+.card {
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.card-header {
+    font-weight: 600;
+}
+
+/* Action Buttons */
+.btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+}
+
+/* Badge Styling */
+.badge {
+    font-weight: 500;
+    padding: 0.35em 0.65em;
+}
+
+/* Form Controls */
+.form-check {
+    margin-bottom: 0.5rem;
+}
+
+.form-check-input:checked {
+    background-color: #1a73e8;
+    border-color: #1a73e8;
+}
+
+/* Communication Modal */
+.communication-modal .modal-dialog {
+    max-width: 95%;
+    height: 85vh;
+    margin: 2.5vh auto;
+}
+
+.communication-modal .modal-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.communication-modal .modal-header {
+    padding: 1rem 1.5rem;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.communication-modal .modal-body {
+    flex: 1;
+    padding: 1.5rem;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.communication-modal .communication-panel {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.communication-modal .message-group {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+}
+
+.communication-modal .message-group .form-control {
+    flex: 1;
+    min-height: 300px;
+    resize: vertical;
+}
+
+.communication-modal .actions-row {
+    margin-top: auto;
+}
+
+.communication-modal .message-container {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-radius: 0.5rem;
+}
+
+.communication-modal .message {
+    margin-bottom: 1rem;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    max-width: 80%;
+}
+
+.communication-modal .message.sent {
+    background-color: #e3f2fd;
+    margin-left: auto;
+}
+
+.communication-modal .message.received {
+    background-color: #f1f1f1;
+    margin-right: auto;
+}
+
+.communication-modal .message-time {
+    font-size: 0.75rem;
+    color: #6c757d;
+    margin-top: 0.25rem;
+}
+
+.communication-modal .message-input-container {
+    display: flex;
+    gap: 0.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid #dee2e6;
+}
+
+.communication-modal .form-control {
+    border-radius: 1.5rem;
+    padding: 0.5rem 1rem;
+}
+
+.communication-modal .btn-send {
+    border-radius: 1.5rem;
+    padding: 0.5rem 1.5rem;
+}
+
+/* Sidebar styles */
+.sidebar {
+    width: 280px;
+    min-width: 280px;
+    height: calc(100vh - 100px);
+    overflow-y: auto;
+    background-color: #f8f9fa;
+    padding: 1rem;
+    transition: all 0.3s ease-in-out;
+    border-right: 1px solid #dee2e6;
+    position: relative;
+    z-index: 100;
+}
+
+.sidebar.collapsed {
+    margin-left: -280px;
+}
+
+.main-content {
+    flex: 1;
+    transition: all 0.3s ease-in-out;
+    padding: 1rem;
+    width: 100%;
+}
+
+.main-content.expanded {
+    margin-left: 0;
+}
+
+/* Adjust table responsiveness */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+}
+
+/* Ensure the toggle button stays on top */
+#sidebarToggle {
+    transition: all 0.3s ease-in-out;
+}
+
+#sidebarToggle.collapsed {
+    left: 10px;
+}
+
+/* Add some spacing for mobile */
+@media (max-width: 768px) {
+    .sidebar {
+        position: fixed;
+        left: 0;
+        top: 56px;
+        height: calc(100vh - 56px);
+        z-index: 1000;
+    }
+    
+    .sidebar:not(.collapsed) {
+        box-shadow: 3px 0 10px rgba(0,0,0,0.1);
+    }
+    
+    .main-content {
+        margin-left: 0;
+    }
+    
+    .main-content.expanded {
+        margin-left: 280px;
+    }
+}
+
+/* Alert styles */
+tr.alert-danger, tr.alert-warning {
+    --bs-table-hover-bg: inherit;
+}
+
+/* Nav tabs */
+.nav-tabs .nav-link {
+    color: #495057;
+}
+
+.nav-tabs .nav-link.active {
+    font-weight: 500;
+}
+
+/* Trend indicators */
+.trend-up {
+    color: #dc3545;
+}
+
+.trend-down {
+    color: #198754;
+}
+
+.trend-stable {
+    color: #6c757d;
+}
+
+/* Intervention tracking */
+.intervention-item {
+    padding: 10px;
+    border-left: 3px solid #0d6efd;
+    background-color: #f8f9fa;
+    margin-bottom: 10px;
+}
+
+.intervention-date {
+    font-size: 0.85rem;
+    color: #6c757d;
+}
+
+.intervention-status {
+    font-weight: 500;
+}
+
+.status-pending {
+    color: #fd7e14;
+}
+
+.status-completed {
+    color: #198754;
+}
+
+.status-overdue {
+    color: #dc3545;
+}
+
+
+/* Sidebar Styles */
+.sidebar {
+    width: 250px;
+    background: white;
+    border-right: 1px solid #dee2e6;
+    padding: 15px;
+    transition: margin-left 0.3s ease;
+    flex-shrink: 0;
+}
+
+.sidebar.collapsed {
+    margin-left: -250px;
+}
+
+/* Main Content Styles */
+.main-content {
+    flex: 1;
+    padding: 15px;
+    transition: margin-left 0.3s ease, margin-right 0.3s ease;
+    overflow-y: auto;
+}
+
+.main-content.expanded {
+    margin-left: 0;
+}
+
+/* Chatbot Panel Styles */
+.chatbot-panel {
+    width: 400px;
+    background: white;
+    border-left: 1px solid #dee2e6;
+    display: flex;
+    flex-direction: column;
+    transition: margin-right 0.3s ease;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+.chatbot-panel.collapsed {
+    margin-right: -400px;
+}
+
+.chatbot-toggle-btn {
+    position: fixed;
+    right: 10px;
+    top: 70px;
+    z-index: 1000;
+}
+
+.chatbot-header {
+    padding: 1rem;
+    background: #0d6efd;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #dee2e6;
+    flex-shrink: 0;
+}
+
+.chatbot-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.chatbot-upload-section {
+    border-bottom: 1px solid #dee2e6;
+    padding-bottom: 1rem;
+    flex-shrink: 0;
+}
+
+.chatbot-messages {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 1rem;
+}
+
+.chat-message {
+    margin-bottom: 1rem;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    max-width: 85%;
+}
+
+.chat-message.user {
+    background: #e3f2fd;
+    margin-left: auto;
+    text-align: right;
+}
+
+.chat-message.bot {
+    background: #f5f5f5;
+    margin-right: auto;
+}
+
+.chat-message .message-time {
+    font-size: 0.75rem;
+    color: #6c757d;
+    margin-top: 0.25rem;
+}
+
+.chatbot-input {
+    padding: 1rem;
+    border-top: 1px solid #dee2e6;
+    background: #f8f9fa;
+    flex-shrink: 0;
+}
+
+.chatbot-input textarea {
+    resize: vertical;
+    min-height: 60px;
+    max-height: 200px;
+}
+
+
+/* Typing indicator animation */
+.typing-indicator {
+    display: flex;
+    gap: 4px;
+    padding: 8px;
+}
+
+.typing-indicator span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #6c757d;
+    animation: typing 1.4s infinite;
+}
+
+.typing-indicator span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.typing-indicator span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes typing {
+    0%, 60%, 100% {
+        transform: translateY(0);
+        opacity: 0.7;
+    }
+    30% {
+        transform: translateY(-10px);
+        opacity: 1;
+    }
+}
