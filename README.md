@@ -68,6 +68,10 @@ python -c "import secrets; print(secrets.token_hex(32))"
 
 4. Set up database:
 ```bash
+# Create the main database tables (you'll need to create these based on the schema above)
+mysql -u your_user -p your_database < create_database_schema.sql
+
+# Create the eval table and add alert_archive column
 mysql -u your_user -p your_database < create_eval_table.sql
 ```
 
@@ -83,16 +87,176 @@ http://localhost:5000
 
 ## Database Schema
 
-### Key Tables
-- **patient**: Patient information
-- **vitals_data**: Vital signs (BP, HR, SpO2, etc.)
-- **lab_result**: Laboratory test results
-- **medication**: Medication records
-- **alert**: Generated alerts with archive status
-- **eval**: Tracks last evaluated timestamps per patient
-- **facility**: Healthcare facilities
-- **physician**: Physician information
-- **admin**: Administrator accounts
+The Care Co-Ordinator System uses MySQL database with the following tables:
+
+### Core Tables
+
+#### `patient` - Patient Information
+```sql
+CREATE TABLE patient (
+    patient_id INT AUTO_INCREMENT PRIMARY KEY,
+    patient_first_name VARCHAR(100) NOT NULL,
+    patient_last_name VARCHAR(100) NOT NULL,
+    patient_dob DATE,
+    patient_gender ENUM('Male', 'Female', 'Other'),
+    patient_room VARCHAR(20),
+    patient_admission_date DATE,
+    patient_insurance VARCHAR(100),
+    facility_id INT,
+    physician_id INT,
+    FOREIGN KEY (facility_id) REFERENCES facility(facility_id),
+    FOREIGN KEY (physician_id) REFERENCES physician(physician_id)
+);
+```
+
+#### `facility` - Healthcare Facilities
+```sql
+CREATE TABLE facility (
+    facility_id INT AUTO_INCREMENT PRIMARY KEY,
+    facility_name VARCHAR(200) NOT NULL,
+    facility_email VARCHAR(100),
+    facility_address TEXT,
+    facility_phone VARCHAR(20)
+);
+```
+
+#### `physician` - Physician Information
+```sql
+CREATE TABLE physician (
+    physician_id INT AUTO_INCREMENT PRIMARY KEY,
+    physician_first_name VARCHAR(100) NOT NULL,
+    physician_last_name VARCHAR(100) NOT NULL,
+    physician_email VARCHAR(100),
+    physician_phone VARCHAR(20),
+    physician_specialty VARCHAR(100)
+);
+```
+
+#### `admin` - Administrator Accounts
+```sql
+CREATE TABLE admin (
+    admin_id INT AUTO_INCREMENT PRIMARY KEY,
+    admin_first_name VARCHAR(100) NOT NULL,
+    admin_last_name VARCHAR(100) NOT NULL,
+    admin_email VARCHAR(100) UNIQUE NOT NULL,
+    admin_password VARCHAR(255) NOT NULL,
+    admin_role ENUM('admin', 'supervisor') DEFAULT 'admin',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+### Clinical Data Tables
+
+#### `vitals_data` - Patient Vital Signs
+```sql
+CREATE TABLE vitals_data (
+    vitals_id INT AUTO_INCREMENT PRIMARY KEY,
+    patient_id INT NOT NULL,
+    blood_pressure VARCHAR(20),
+    heart_rate INT,
+    temperature DECIMAL(4,1),
+    weight DECIMAL(5,1),
+    height DECIMAL(5,1),
+    BMI DECIMAL(4,1),
+    spo2 INT,
+    vitals_date_time DATETIME NOT NULL,
+    recorded_by VARCHAR(100),
+    FOREIGN KEY (patient_id) REFERENCES patient(patient_id) ON DELETE CASCADE,
+    INDEX idx_patient_datetime (patient_id, vitals_date_time)
+);
+```
+
+#### `lab_result` - Laboratory Test Results
+```sql
+CREATE TABLE lab_result (
+    lab_id INT AUTO_INCREMENT PRIMARY KEY,
+    patient_id INT NOT NULL,
+    sodium DECIMAL(5,2),
+    potassium DECIMAL(5,2),
+    BUN DECIMAL(5,1),
+    creatinine DECIMAL(4,2),
+    glucose DECIMAL(5,1),
+    lab_date_time DATETIME NOT NULL,
+    lab_technician VARCHAR(100),
+    lab_notes TEXT,
+    FOREIGN KEY (patient_id) REFERENCES patient(patient_id) ON DELETE CASCADE,
+    INDEX idx_patient_datetime (patient_id, lab_date_time)
+);
+```
+
+#### `medication` - Medication Records
+```sql
+CREATE TABLE medication (
+    medication_id INT AUTO_INCREMENT PRIMARY KEY,
+    patient_id INT NOT NULL,
+    medication_name VARCHAR(200) NOT NULL,
+    medication_dose VARCHAR(100),
+    medication_frequency VARCHAR(100),
+    medication_route VARCHAR(50),
+    medication_date_time DATETIME NOT NULL,
+    prescribed_by VARCHAR(100),
+    medication_notes TEXT,
+    FOREIGN KEY (patient_id) REFERENCES patient(patient_id) ON DELETE CASCADE,
+    INDEX idx_patient_datetime (patient_id, medication_date_time)
+);
+```
+
+### Alert Management Tables
+
+#### `alert` - Generated Alerts
+```sql
+CREATE TABLE alert (
+    alert_id INT AUTO_INCREMENT PRIMARY KEY,
+    patient_id INT NOT NULL,
+    facility_id INT,
+    alert_type VARCHAR(500) NOT NULL,
+    alert_detail TEXT,
+    alert_date_time DATETIME DEFAULT CURRENT_TIMESTAMP,
+    alert_archive TINYINT DEFAULT 0,
+    alert_severity ENUM('Low', 'Medium', 'High', 'Critical') DEFAULT 'Medium',
+    reviewed_by INT,
+    reviewed_at DATETIME,
+    FOREIGN KEY (patient_id) REFERENCES patient(patient_id) ON DELETE CASCADE,
+    FOREIGN KEY (facility_id) REFERENCES facility(facility_id),
+    FOREIGN KEY (reviewed_by) REFERENCES admin(admin_id),
+    INDEX idx_patient_datetime (patient_id, alert_date_time),
+    INDEX idx_facility_archive (facility_id, alert_archive),
+    INDEX idx_archive_datetime (alert_archive, alert_date_time)
+);
+```
+
+#### `eval` - Evaluation Tracking
+```sql
+CREATE TABLE eval (
+    eval_id INT AUTO_INCREMENT PRIMARY KEY,
+    patient_id INT NOT NULL,
+    lab_last_date_time DATETIME DEFAULT NULL,
+    medication_last_date_time DATETIME DEFAULT NULL,
+    vitals_last_date_time DATETIME DEFAULT NULL,
+    last_eval_time DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    UNIQUE KEY unique_patient (patient_id),
+    FOREIGN KEY (patient_id) REFERENCES patient(patient_id) ON DELETE CASCADE
+);
+```
+
+### Key Indexes and Constraints
+
+- **Primary Keys**: All tables have auto-incrementing primary keys
+- **Foreign Keys**: Maintain referential integrity between related tables
+- **Unique Constraints**: Prevent duplicate admin emails and patient evaluations
+- **DateTime Indexes**: Optimize queries for time-based data retrieval
+- **Composite Indexes**: Improve performance for patient-specific queries
+
+### Data Relationships
+
+- **Patient → Facility**: Many-to-one (patients belong to facilities)
+- **Patient → Physician**: Many-to-one (patients have primary physicians)
+- **Patient → Clinical Data**: One-to-many (patients have multiple vitals, labs, medications)
+- **Patient → Alerts**: One-to-many (patients can have multiple alerts)
+- **Patient → Eval**: One-to-one (each patient has one evaluation tracking record)
+- **Alert → Admin**: Many-to-one (alerts can be reviewed by admins)
+
+## Database Schema
 
 ## Architecture
 
@@ -130,7 +294,8 @@ your-admin-activity-bucket/
 
 - `app_flask.py` - Main Flask application
 - `utils.py` - Utility functions (S3, SES, database)
-- `create_eval_table.sql` - Database setup script
+- `create_database_schema.sql` - Complete database schema setup
+- `create_eval_table.sql` - Evaluation table and alert archive column
 - `static/js/dashboard.js` - Frontend JavaScript
 - `static/css/styles.css` - Styling
 - `templates/dashboard.html` - Main dashboard template
