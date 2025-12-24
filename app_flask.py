@@ -1,5 +1,5 @@
 """
-Care Coordinator Dashboard - Flask Application
+Care Co-Ordinator Dashboard - Flask Application
 """
 from flask import Flask, render_template, request, jsonify, session, redirect, url_for
 import os
@@ -516,7 +516,7 @@ def check_new_alerts():
 
 def check_new_entries_and_generate_alerts():
     """Background task to check for new entries and generate alerts"""
-    print("🔍 Alert monitoring started - checking every minute for new entries...")
+    print("🔍 Care coordination monitoring started - checking every minute for new entries...")
     
     while True:
         try:
@@ -562,7 +562,7 @@ def check_new_entries_and_generate_alerts():
                         print(f"Error processing patient {patient_id}: {e}")
             
         except Exception as e:
-            print(f"Error in alert monitoring: {e}")
+            print(f"Error in care coordination monitoring: {e}")
             import traceback
             traceback.print_exc()
 
@@ -958,8 +958,8 @@ def save_recommendation_to_s3(alert_id, recommendation, patient_id):
     except Exception as e:
         print(f"  ❌ Error saving to S3: {e}")
 
-def start_alert_monitoring():
-    """Start the background alert monitoring thread"""
+def start_care_coordination_monitoring():
+    """Start the background care coordination monitoring thread"""
     # Only start in the main process (not in Flask reloader process)
     if os.environ.get('WERKZEUG_RUN_MAIN') == 'true':
         monitor_thread = threading.Thread(target=check_new_entries_and_generate_alerts, daemon=True)
@@ -1116,8 +1116,8 @@ def query_knowledge_base():
 
 
 if __name__ == '__main__':
-    # Start background alert monitoring
-    start_alert_monitoring()
+    # Start background care coordination monitoring
+    start_care_coordination_monitoring()
     
     # Start Flask app
     app.run(debug=True, host='0.0.0.0', port=5000)

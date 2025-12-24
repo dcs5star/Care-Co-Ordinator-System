@@ -3,6 +3,9 @@
 .env.local
 .env.*.local
 
+# Keep example file
+!.env.example
+
 # Python
 __pycache__/
 *.py[cod]

@@ -1,10 +1,10 @@
-# Real-Time Medical Alert System
+# Care Co-Ordinator System
 
-A Flask-based medical alert monitoring system with AI-powered analysis using AWS Bedrock and Knowledge Base integration.
+A Flask-based care coordination system with AI-powered analysis using AWS Bedrock and Knowledge Base integration.
 
 ## Features
 
-### 1. Alert Monitoring System
+### 1. Care Coordination System
 - **Real-time monitoring** of patient vitals, lab results, and medications
 - **AI-powered analysis** using AWS Bedrock Claude model
 - **Automatic alert generation** when abnormalities are detected
@@ -41,7 +41,7 @@ A Flask-based medical alert monitoring system with AI-powered analysis using AWS
 pip install -r requirements.txt
 ```
 
-2. Configure environment variables in `.env`:
+2. Configure environment variables in `.env` (copy from `.env.example`):
 ```
 AWS_REGION=us-east-1
 BEDROCK_MODEL_ID=anthropic.claude-3-haiku-20240307-v1:0
@@ -61,7 +61,12 @@ SES_SENDER_EMAIL=your_email@example.com
 FLASK_SECRET_KEY=your_secret_key
 ```
 
-3. Set up database:
+3. **Generate a secure Flask secret key**:
+```bash
+python -c "import secrets; print(secrets.token_hex(32))"
+```
+
+4. Set up database:
 ```bash
 mysql -u your_user -p your_database < create_eval_table.sql
 ```
@@ -108,16 +113,16 @@ http://localhost:5000
 ## S3 Structure
 
 ```
-rtm-kb/
+your-kb-bucket/
 ├── internal-kb/
 │   └── [general documents]
 └── {firstname}_{lastname}_{patientid}/
     └── [patient-specific documents]
 
-rtm-recommendation-bucket/
+your-recommendation-bucket/
 └── {alert_id}_{patient_id}_recommendation.txt
 
-rtm-admin-activity/
+your-admin-activity-bucket/
 └── {admin_id}.txt
 ```
 
@@ -133,7 +138,7 @@ rtm-admin-activity/
 
 ## Features in Detail
 
-### Alert System
+### Care Coordination System
 - Strict threshold checking for all vital signs and lab values
 - Independent tracking per data source (vitals, labs, meds)
 - Prevents duplicate alerts for same condition using keyword matching
@@ -159,6 +164,29 @@ The application uses:
 - **python-dotenv** for environment variable management
 - **Bootstrap 5** for UI components
 - **JavaScript** for frontend interactivity
+
+## Security Considerations
+
+⚠️ **IMPORTANT**: This project contains several security considerations that must be addressed before deployment:
+
+### Before GitHub Upload:
+1. **Never commit the `.env` file** - It contains sensitive credentials
+2. **Use `.env.example`** - Copy and rename to `.env`, then fill with your actual values
+3. **Review all code** - Ensure no hardcoded credentials or sensitive data
+
+### SQL Injection Prevention:
+The current codebase uses string formatting for SQL queries which creates SQL injection vulnerabilities. Before production use:
+1. Replace all f-string SQL queries with parameterized queries
+2. Use prepared statements with parameter binding
+3. Validate and sanitize all user inputs
+
+### Production Security:
+- Use strong, unique passwords for all accounts
+- Enable AWS IAM roles instead of access keys where possible
+- Implement proper input validation and sanitization
+- Use HTTPS in production
+- Regularly update dependencies
+- Implement proper logging and monitoring
 
 ## Additional Features
 
