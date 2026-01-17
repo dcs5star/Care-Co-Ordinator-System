@@ -410,6 +410,32 @@ The current codebase uses string formatting for SQL queries which creates SQL in
 - `POST /api/chatbot/upload` - Upload documents to knowledge base
 - `POST /api/chatbot/query` - Query knowledge base
 
+## So how does it work?
+
+- First login using admin credential email and password which are stored in admin table.
+
+![Login Page](Screenshots/login-page.png)
+
+- You will land on main dashboard where you will see past alerts and archived alert along with admin activity logs at bottom. On left panel you can filter alert based on facilities for those perticular patients. On right panel you will have file upload feature with chatbot to interact with patient data and other knowledge base artifacts stored in S3 bucket.
+
+![Main Dashboard](Screenshots/main-dashboard.png)
+
+- You can view perticular alert by clicking preview button which will take you resident dashboard. You can archive the alert by clicking Archive button.
+
+![Resident Dashboard Preview Button 1](Screenshots/resident-dashboard-preview-button-1.png)
+
+![Resident Dashboard Preview Button 2](Screenshots/resident-dashboard-preview-button-2.png)
+
+- On right panel you can use file upload feature to upload patient test result or report by choosing first patient from drop down and browse your file location to upload. This will upload the file with patient name and ID as filename to the S3 bucket within patient name folder. Same way if you want to upload any other artifacts as knowledge base you can choose internal-KB from drop down and upload file which will saved in the same same bucket but under internal-kb folder in S3. The entire bucket is used as knowledge base for RAG processing to use with chatbot. Whenever you upload any file, it will automatically check the status of file upload operation and sync the knowledge base data source. So you will always have upto date information in chatbot.
+
+![KB S3 Bucket 1](Screenshots/KB-S3-Bucket-1.png)
+
+![KB S3 Bucket 2](Screenshots/KB-S3-Bucket-2.png)
+
+- On chatbot you can ask any question regarding patient records and any other information which will be fetched from knowledge base we configured with S3 bucket.
+
+![Chatbot](Screenshots/chatbot.png)
+
 ## License
 
 Proprietary - All rights reserved
