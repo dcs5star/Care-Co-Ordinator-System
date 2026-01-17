@@ -428,6 +428,10 @@ The current codebase uses string formatting for SQL queries which creates SQL in
 
 ![Resident Dashboard Preview Button 2](Screenshots/resident-dashboard-preview-button-2.png)
 
+- Under resident dashboard you can use "Message care team" button to open dialog box which automatically crafts the email with physician and care team's email addresses and alert, causes, recommendations and follow up details as body. You can add or remove the recipients and change the body of the message.
+
+![Email Communication](Screenshots/email-communication.png)
+
 - On right panel you can use file upload feature to upload patient test result or report by choosing first patient from drop down and browse your file location to upload. This will upload the file with patient name and ID as filename to the S3 bucket within patient name folder. Same way if you want to upload any other artifacts as knowledge base you can choose internal-KB from drop down and upload file which will saved in the same bucket but under internal-kb folder in S3. The entire bucket is used as knowledge base for RAG processing to use with chatbot. Whenever you upload any file, it will automatically check the status of file upload operation and sync the knowledge base data source. So you will always have upto date information in chatbot.
 
 ![KB S3 Bucket 1](Screenshots/KB-S3-Bucket-1.png)
