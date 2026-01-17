@@ -412,6 +412,8 @@ The current codebase uses string formatting for SQL queries which creates SQL in
 
 ## So how does it work?
 
+- Intro: This application will automatically check for any new data within vitals_data, lab_result and medication tables every one minute and if it finds one then it will take all the data for last 30 days from these three tables for this patient and infer against it with LLM to generate alert and recommendation for that patient and stores alert info in alert table and recommendations in recommendation bucket on S3. It also creates the evaluation entry in eval table so that next time if new records comes for that patient it will check new entry time and the timestamp of this eval entry and if its within 30 days will consider for inferences.
+
 - First login using admin credential email and password which are stored in admin table.
 
 ![Login Page](Screenshots/login-page.png)
