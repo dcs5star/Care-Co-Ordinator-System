@@ -416,11 +416,11 @@ The current codebase uses string formatting for SQL queries which creates SQL in
 
 ![Login Page](Screenshots/login-page.png)
 
-- You will land on main dashboard where you will see past alerts and archived alert along with admin activity logs at bottom. On left panel you can filter alert based on facilities for those perticular patients. On right panel you will have file upload feature with chatbot to interact with patient data and other knowledge base artifacts stored in S3 bucket.
+- You will land on main dashboard where you will see past alerts and archived alert along with admin activity logs at bottom. On left panel you can filter alert based on facilities for those particular patients. On right panel you will have file upload feature with chatbot to interact with patient data and other knowledge base artifacts stored in S3 bucket.
 
 ![Main Dashboard](Screenshots/main-dashboard.png)
 
-- You can view perticular alert by clicking preview button which will take you resident dashboard. You can archive the alert by clicking Archive button.
+- You can view particular alert by clicking preview button which will take you resident dashboard. You can archive the alert by clicking Archive button.
 
 ![Resident Dashboard Preview Button 1](Screenshots/resident-dashboard-preview-button-1.png)
 
